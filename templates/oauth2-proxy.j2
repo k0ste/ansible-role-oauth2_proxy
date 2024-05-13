@@ -1,0 +1,650 @@
+{{ '## oauth2-proxy.conf' }}
+{{ '# ' + ansible_managed }}
+{{ '# Do not edit manually' }}
+
+{% if vars['oauth2p_settings'] is defined and
+  vars['oauth2p_settings'] != [] %}
+{% for o in vars['oauth2p_settings'] %}
+{% if o['acr_values_string'] is defined and o['acr_values_string'] != '' %}
+{{ 'acr_values_string = \"' + o['acr_values_string'] + '\"' }}
+{% endif %}
+{% if o['allow_query_semicolons'] is defined and o['allow_query_semicolons'] in
+  ['true', 'false'] %}
+{{ 'allow_query_semicolons = ' + o['allow_query_semicolons'] }}
+{% endif %}
+{% if o['allowed_group'] is defined and o['allowed_group'] != '' %}
+{% if o['allowed_group'] is string %}
+{{ 'allowed_group = \"' + o['allowed_group'] + '\"' }}
+{% elif o['allowed_group'] is sequence %}
+{% for oag in o['allowed_group'] %}
+{% if loop['first'] %}
+{{ 'allowed_group = [' -}}
+{% endif %}
+{{- '\"' ~ oag ~ '\"' -}}
+{% if loop['last'] %}
+{{- ']' }}
+{% else %}
+{{- ',' -}}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endif %}
+{% if o['allowed_role'] is defined and o['allowed_role'] != '' %}
+{% if o['allowed_role'] is string %}
+{{ 'allowed_role = \"' + o['allowed_role'] + '\"' }}
+{% elif o['allowed_role'] is sequence %}
+{% for oar in o['allowed_role'] %}
+{% if loop['first'] %}
+{{ 'allowed_role = [' -}}
+{% endif %}
+{{- '\"' ~ oar ~ '\"' -}}
+{% if loop['last'] %}
+{{- ']' }}
+{% else %}
+{{- ',' -}}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endif %}
+{% if o['api_route'] is defined and o['api_route'] != '' %}
+{{ 'api_route = \"' + o['api_route'] + '\"' }}
+{% endif %}
+{% if o['approval_prompt'] is defined and o['approval_prompt'] != '' %}
+{{ 'approval_prompt = \"' + o['approval_prompt'] + '\"' }}
+{% endif %}
+{% if o['auth_logging'] is defined and o['auth_logging'] in ['true', 'false'] %}
+{{ 'auth_logging = ' + o['auth_logging'] }}
+{% endif %}
+{% if o['auth_logging_format'] is defined and o['auth_logging_format'] != '' %}
+{{ 'auth_logging_format = \"' + o['auth_logging_format'] + '\"' }}
+{% endif %}
+{% if o['authenticated_emails_file'] is defined and
+  o['authenticated_emails_file'] != '' %}
+{{ 'authenticated_emails_file = \"' + o['authenticated_emails_file'] + '\"' }}
+{% endif %}
+{% if o['azure_graph_group_field'] is defined and
+  o['azure_graph_group_field'] in ['id', 'displayName'] %}
+{{ 'azure_graph_group_field = \"' + o['azure_graph_group_field'] + '\"' }}
+{% endif %}
+{% if o['azure_tenant'] is defined and o['azure_tenant'] in ['tenant-specific',
+  'common'] %}
+{{ 'azure_tenant = \"' + o['azure_tenant'] + '\"' }}
+{% endif %}
+{% if o['backend_logout_url'] is defined and o['backend_logout_url'] != '' %}
+{{ 'backend_logout_url = \"' + o['backend_logout_url'] + '\"' }}
+{% endif %}
+{% if o['banner'] is defined and o['banner'] != '' %}
+{{ 'banner = \"' + o['banner'] + '\"' }}
+{% endif %}
+{% if o['basic_auth_password'] is defined and o['basic_auth_password'] != '' %}
+{{ 'basic_auth_password = \"' + o['basic_auth_password'] + '\"' }}
+{% endif %}
+{% if o['bitbucket_repository'] is defined and
+  o['bitbucket_repository'] != '' %}
+{{ 'bitbucket_repository = \"' + o['bitbucket_repository'] + '\"' }}
+{% endif %}
+{% if o['bitbucket_team'] is defined and o['bitbucket_team'] != '' %}
+{{ 'bitbucket_repository = \"' + o['bitbucket_team'] + '\"' }}
+{% endif %}
+{% if o['client_id'] is defined and o['client_id'] != '' %}
+{{ 'client_id = \"' + o['client_id'] + '\"' }}
+{% endif %}
+{% if o['client_secret_file'] is defined and o['client_secret_file'] != '' %}
+{{ 'client_secret_file = \"' + o['client_secret_file'] + '\"' }}
+{% endif %}
+{% if o['code_challenge_method'] is defined and
+  o['code_challenge_method'] in ['plain', 'S256'] %}
+{{ 'code_challenge_method = \"' + o['code_challenge_method'] + '\"' }}
+{% endif %}
+{% if o['cookie_csrf_expire'] is defined and o['cookie_csrf_expire'] != '' %}
+{{ 'cookie_csrf_expire = \"' + o['cookie_csrf_expire'] + '\"' }}
+{% endif %}
+{% if o['cookie_csrf_per_request'] is defined and
+  o['cookie_csrf_per_request'] in ['true', 'false'] %}
+{{ 'cookie_csrf_per_request = ' + o['cookie_csrf_per_request'] }}
+{% endif %}
+{% if o['cookie_domain'] is defined and o['cookie_domain'] != '' %}
+{{ 'cookie_domain = \"' + o['cookie_domain'] + '\"' }}
+{% endif %}
+{% if o['cookie_expire'] is defined and o['cookie_expire'] != '' %}
+{{ 'cookie_expire = \"' + o['cookie_expire'] + '\"' }}
+{% endif %}
+{% if o['cookie_httponly'] is defined and
+  o['cookie_httponly'] in ['true', 'false'] %}
+{{ 'cookie_httponly = ' + o['cookie_httponly'] }}
+{% endif %}
+{% if o['cookie_name'] is defined and o['cookie_name'] != '' %}
+{{ 'cookie_name = \"' + o['cookie_name'] + '\"' }}
+{% endif %}
+{% if o['cookie_path'] is defined and o['cookie_path'] != '' %}
+{{ 'cookie_path = \"' + o['cookie_path'] + '\"' }}
+{% endif %}
+{% if o['cookie_refresh'] is defined and o['cookie_refresh'] != '' %}
+{{ 'cookie_refresh = \"' + o['cookie_refresh'] + '\"' }}
+{% endif %}
+{% if o['cookie_samesite'] is defined and o['cookie_samesite'] != '' %}
+{{ 'cookie_samesite = \"' + o['cookie_samesite'] + '\"' }}
+{% endif %}
+{% if o['cookie_secret'] is defined and o['cookie_secret'] != '' %}
+{{ 'cookie_secret = \"' + o['cookie_secret'] + '\"' }}
+{% endif %}
+{% if o['cookie_secure'] is defined and
+  o['cookie_secure'] in ['true', 'false'] %}
+{{ 'cookie_secure = ' + o['cookie_secure'] }}
+{% endif %}
+{% if o['custom_sign_in_logo'] is defined and o['custom_sign_in_logo'] != '' %}
+{{ 'custom_sign_in_logo = \"' + o['custom_sign_in_logo'] + '\"' }}
+{% endif %}
+{% if o['custom_templates_dir'] is defined and
+  o['custom_templates_dir'] != '' %}
+{{ 'custom_templates_dir = \"' + o['custom_templates_dir'] + '\"' }}
+{% endif %}
+{% if o['ddisplay_htpasswd_form'] is defined and
+  o['ddisplay_htpasswd_form'] in ['true', 'false'] %}
+{{ 'ddisplay_htpasswd_form = ' + o['ddisplay_htpasswd_form'] }}
+{% endif %}
+{% if o['email_domain'] is defined and o['email_domain'] != '' %}
+{{ 'email_domain = \"' + o['email_domain'] + '\"' }}
+{% endif %}
+{% if o['encode_state'] is defined and o['encode_state'] in ['true', 'false'] %}
+{{ 'encode_state = ' + o['encode_state'] }}
+{% endif %}
+{% if o['errors_to_info_log'] is defined and
+  o['errors_to_info_log'] in ['true', 'false'] %}
+{{ 'errors_to_info_log = ' + o['errors_to_info_log'] }}
+{% endif %}
+{% if o['exclude_logging_path'] is defined and
+  o['exclude_logging_path'] != '' %}
+{{ 'exclude_logging_path = \"' + o['exclude_logging_path'] + '\"' }}
+{% endif %}
+{% if o['extra_jwt_issuers'] is defined and
+  o['extra_jwt_issuers'] != '' %}
+{{ 'extra_jwt_issuers = \"' + o['extra_jwt_issuers'] + '\"' }}
+{% endif %}
+{% if o['flush_interval'] is defined and o['flush_interval'] != '' %}
+{{ 'flush_interval = \"' + o['flush_interval'] + '\"' }}
+{% endif %}
+{% if o['footer'] is defined and o['footer'] != '' %}
+{{ 'footer = \"' + o['footer'] + '\"' }}
+{% endif %}
+{% if o['footer'] is defined and o['footer'] in ['true', 'false'] %}
+{{ 'footer = ' + o['footer'] }}
+{% endif %}
+{% if o['force_https'] is defined and o['force_https'] in ['true', 'false'] %}
+{{ 'force_https = ' + o['force_https'] }}
+{% endif %}
+{% if o['force_json_errors'] is defined and
+  o['force_json_errors'] in ['true', 'false'] %}
+{{ 'force_json_errors = ' + o['force_json_errors'] }}
+{% endif %}
+{% if o['gcp_healthchecks'] is defined and
+  o['gcp_healthchecks'] in ['true', 'false'] %}
+{{ 'gcp_healthchecks = ' + o['gcp_healthchecks'] }}
+{% endif %}
+{% if o['github_org'] is defined and o['github_org'] != '' %}
+{{ 'github_org = \"' + o['github_org'] + '\"' }}
+{% endif %}
+{% if o['github_repo'] is defined and o['github_repo'] != '' %}
+{{ 'github_repo = \"' + o['github_repo'] + '\"' }}
+{% endif %}
+{% if o['github_team'] is defined and o['github_team'] != '' %}
+{{ 'github_team = \"' + o['github_team'] + '\"' }}
+{% endif %}
+{% if o['github_token'] is defined and o['github_token'] != '' %}
+{{ 'github_token = \"' + o['github_token'] + '\"' }}
+{% endif %}
+{% if o['github_user'] is defined and o['github_user'] != '' %}
+{{ 'github_user = \"' + o['github_user'] + '\"' }}
+{% endif %}
+{% if o['gitlab_group'] is defined and o['gitlab_group'] != '' %}
+{% if o['gitlab_group'] is string %}
+{{ 'gitlab_group = \"' + o['gitlab_group'] + '\"' }}
+{% elif o['gitlab_group'] is sequence %}
+{% for ogg in o['gitlab_group'] %}
+{% if loop['first'] %}
+{{ 'gitlab_group = [' -}}
+{% endif %}
+{{- '\"' ~ ogg ~ '\"' -}}
+{% if loop['last'] %}
+{{- ']' }}
+{% else %}
+{{- ',' -}}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endif %}
+{% if o['gitlab_project'] is defined and o['gitlab_project'] != '' %}
+{% if o['gitlab_project'] is string %}
+{{ 'gitlab_project = \"' + o['gitlab_project'] + '\"' }}
+{% elif o['gitlab_project'] is sequence %}
+{% for ogp in o['gitlab_project'] %}
+{% if loop['first'] %}
+{{ 'gitlab_project = [' -}}
+{% endif %}
+{{- '\"' ~ ogp ~ '\"' -}}
+{% if loop['last'] %}
+{{- ']' }}
+{% else %}
+{{- ',' -}}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endif %}
+{% if o['google_admin_email'] is defined and o['google_admin_email'] != '' %}
+{{ 'google_admin_email = \"' + o['google_admin_email'] + '\"' }}
+{% endif %}
+{% if o['google_group'] is defined and o['google_group'] != '' %}
+{% if o['google_group'] is string %}
+{{ 'google_group = \"' + o['google_group'] + '\"' }}
+{% elif o['google_group'] is sequence %}
+{% for ogp in o['google_group'] %}
+{% if loop['first'] %}
+{{ 'google_group = [' -}}
+{% endif %}
+{{- '\"' ~ ogp ~ '\"' -}}
+{% if loop['last'] %}
+{{- ']' }}
+{% else %}
+{{- ',' -}}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endif %}
+{% if o['google_service_account_json'] is defined and
+  o['google_service_account_json'] != '' %}
+{{ 'google_service_account_json = \"' +
+  o['google_service_account_json'] + '\"' }}
+{% endif %}
+{% if o['google_target_principal'] is defined and
+  o['google_target_principal'] != '' %}
+{{ 'google_target_principal = \"' +
+  o['google_target_principal'] + '\"' }}
+{% endif %}
+{% if o['google_use_application_default_credentials'] is defined and
+  o['google_use_application_default_credentials'] != '' %}
+{{ 'google_use_application_default_credentials = \"' +
+  o['google_use_application_default_credentials'] + '\"' }}
+{% endif %}
+{% if o['htpasswd_file'] is defined and o['htpasswd_file'] != '' %}
+{{ 'htpasswd_file = \"' + o['htpasswd_file'] + '\"' }}
+{% endif %}
+{% if o['htpasswd_user_group'] is defined and o['htpasswd_user_group'] != '' %}
+{% if o['htpasswd_user_group'] is string %}
+{{ 'htpasswd_user_group = \"' + o['htpasswd_user_group'] + '\"' }}
+{% elif o['htpasswd_user_group'] is sequence %}
+{% for ohug in o['htpasswd_user_group'] %}
+{% if loop['first'] %}
+{{ 'htpasswd_user_group = [' -}}
+{% endif %}
+{{- '\"' ~ ohug ~ '\"' -}}
+{% if loop['last'] %}
+{{- ']' }}
+{% else %}
+{{- ',' -}}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endif %}
+{% if o['http_address'] is defined and o['http_address'] != '' %}
+{{ 'http_address = \"' + o['http_address'] + '\"' }}
+{% endif %}
+{% if o['https_address'] is defined and o['https_address'] != '' %}
+{{ 'https_address = \"' + o['https_address'] + '\"' }}
+{% endif %}
+{% if o['insecure_oidc_allow_unverified_email'] is defined and
+  o['insecure_oidc_allow_unverified_email'] in ['true', 'false'] %}
+{{ 'insecure_oidc_allow_unverified_email = ' +
+  o['insecure_oidc_allow_unverified_email'] }}
+{% endif %}
+{% if o['insecure_oidc_skip_issuer_verification'] is defined and
+  o['insecure_oidc_skip_issuer_verification'] in ['true', 'false'] %}
+{{ 'insecure_oidc_skip_issuer_verification = ' +
+  o['insecure_oidc_skip_issuer_verification'] }}
+{% endif %}
+{% if o['jwt_key'] is defined and o['jwt_key'] != '' %}
+{{ 'jwt_key = \"' + o['jwt_key'] + '\"' }}
+{% endif %}
+{% if o['jwt_key_file'] is defined and o['jwt_key_file'] != '' %}
+{{ 'jwt_key_file = \"' + o['jwt_key_file'] + '\"' }}
+{% endif %}
+{% if o['keycloak_group'] is defined and o['keycloak_group'] != '' %}
+{% if o['keycloak_group'] is string %}
+{{ 'keycloak_group = \"' + o['keycloak_group'] + '\"' }}
+{% elif o['keycloak_group'] is sequence %}
+{% for okg in o['keycloak_group'] %}
+{% if loop['first'] %}
+{{ 'keycloak_group = [' -}}
+{% endif %}
+{{- '\"' ~ okg ~ '\"' -}}
+{% if loop['last'] %}
+{{- ']' }}
+{% else %}
+{{- ',' -}}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endif %}
+{% if o['logging_compress'] is defined and
+  o['logging_compress'] in ['true', 'false'] %}
+{{ 'logging_compress = ' + o['logging_compress'] }}
+{% endif %}
+{% if o['logging_filename'] is defined and o['logging_filename'] != '' %}
+{{ 'logging_filename = \"' + o['logging_filename'] + '\"' }}
+{% endif %}
+{% if o['logging_local_time'] is defined and
+  o['logging_local_time'] in ['true', 'false'] %}
+{{ 'logging_local_time = ' + o['logging_local_time'] }}
+{% endif %}
+{% if o['logging_max_age'] is defined and
+  (o['logging_max_age'] | int()) is number %}
+{{ 'logging_max_age = ' ~ o['logging_max_age'] }}
+{% endif %}
+{% if o['logging_max_backups'] is defined and
+  (o['logging_max_backups'] | int()) is number %}
+{{ 'logging_max_backups = ' ~ o['logging_max_backups'] }}
+{% endif %}
+{% if o['logging_max_size'] is defined and
+  (o['logging_max_size'] | int()) is number %}
+{{ 'logging_max_size = ' ~ o['logging_max_size'] }}
+{% endif %}
+{% if o['login_url'] is defined and o['login_url'] != '' %}
+{{ 'login_url = \"' + o['login_url'] + '\"' }}
+{% endif %}
+{% if o['metrics_address'] is defined and o['metrics_address'] != '' %}
+{{ 'metrics_address = \"' + o['metrics_address'] + '\"' }}
+{% endif %}
+{% if o['metrics_secure_address'] is defined and
+  o['metrics_secure_address'] != '' %}
+{{ 'metrics_secure_address = \"' + o['metrics_secure_address'] + '\"' }}
+{% endif %}
+{% if o['metrics_tls_cert_file'] is defined and
+  o['metrics_tls_cert_file'] != '' %}
+{{ 'metrics_tls_cert_file = \"' + o['metrics_tls_cert_file'] + '\"' }}
+{% endif %}
+{% if o['metrics_tls_key_file'] is defined and
+  o['metrics_tls_key_file'] != '' %}
+{{ 'metrics_tls_key_file = \"' + o['metrics_tls_key_file'] + '\"' }}
+{% endif %}
+{% if o['oidc_audience_claim'] is defined and o['oidc_audience_claim'] != '' %}
+{{ 'oidc_audience_claim = \"' + o['oidc_audience_claim'] + '\"' }}
+{% endif %}
+{% if o['oidc_email_claim'] is defined and o['oidc_email_claim'] != '' %}
+{{ 'oidc_email_claim = \"' + o['oidc_email_claim'] + '\"' }}
+{% endif %}
+{% if o['oidc_extra_audience'] is defined and o['oidc_extra_audience'] != '' %}
+{{ 'oidc_extra_audience = \"' + o['oidc_extra_audience'] + '\"' }}
+{% endif %}
+{% if o['oidc_groups_claim'] is defined and o['oidc_groups_claim'] != '' %}
+{{ 'oidc_groups_claim = \"' + o['oidc_groups_claim'] + '\"' }}
+{% endif %}
+{% if o['oidc_issuer_url'] is defined and o['oidc_issuer_url'] != '' %}
+{{ 'oidc_issuer_url = \"' + o['oidc_issuer_url'] + '\"' }}
+{% endif %}
+{% if o['oidc_jwks_url'] is defined and o['oidc_jwks_url'] != '' %}
+{{ 'oidc_jwks_url = \"' + o['oidc_jwks_url'] + '\"' }}
+{% endif %}
+{% if o['pass_access_token'] is defined and
+  o['pass_access_token'] in ['true', 'false'] %}
+{{ 'pass_access_token = ' + o['pass_access_token'] }}
+{% endif %}
+{% if o['pass_authorization_header'] is defined and
+  o['pass_authorization_header'] in ['true', 'false'] %}
+{{ 'pass_authorization_header = ' + o['pass_authorization_header'] }}
+{% endif %}
+{% if o['pass_basic_auth'] is defined and
+  o['pass_basic_auth'] in ['true', 'false'] %}
+{{ 'pass_basic_auth = ' + o['pass_basic_auth'] }}
+{% endif %}
+{% if o['pass_host_header'] is defined and
+  o['pass_host_header'] in ['true', 'false'] %}
+{{ 'pass_host_header = ' + o['pass_host_header'] }}
+{% endif %}
+{% if o['pass_user_headers'] is defined and
+  o['pass_user_headers'] in ['true', 'false'] %}
+{{ 'pass_user_headers = ' + o['pass_user_headers'] }}
+{% endif %}
+{% if o['ping_path'] is defined and o['ping_path'] != '' %}
+{{ 'ping_path = \"' + o['ping_path'] + '\"' }}
+{% endif %}
+{% if o['ping_user_agent'] is defined and o['ping_user_agent'] != '' %}
+{{ 'ping_user_agent = \"' + o['ping_user_agent'] + '\"' }}
+{% endif %}
+{% if o['prefer_email_to_user'] is defined and
+  o['prefer_email_to_user'] in ['true', 'false'] %}
+{{ 'prefer_email_to_user = ' + o['prefer_email_to_user'] }}
+{% endif %}
+{% if o['profile_url'] is defined and o['profile_url'] != '' %}
+{{ 'profile_url = \"' + o['profile_url'] + '\"' }}
+{% endif %}
+{% if o['prompt'] is defined and o['prompt'] != '' %}
+{{ 'prompt = \"' + o['prompt'] + '\"' }}
+{% endif %}
+{% if o['provider'] is defined and o['provider'] != '' %}
+{{ 'provider = \"' + o['provider'] + '\"' }}
+{% endif %}
+{% if o['provider_ca_file'] is defined and o['provider_ca_file'] != '' %}
+{{ 'provider_ca_file = \"' + o['provider_ca_file'] + '\"' }}
+{% endif %}
+{% if o['provider_display_name'] is defined and
+  o['provider_display_name'] != '' %}
+{{ 'provider_display_name = \"' + o['provider_display_name'] + '\"' }}
+{% endif %}
+{% if o['proxy_prefix'] is defined and o['proxy_prefix'] != '' %}
+{{ 'proxy_prefix = \"' + o['proxy_prefix'] + '\"' }}
+{% endif %}
+{% if o['proxy_websockets'] is defined and
+  o['proxy_websockets'] in ['true', 'false'] %}
+{{ 'proxy_websockets = ' + o['proxy_websockets'] }}
+{% endif %}
+{% if o['pubjwk_url'] is defined and o['pubjwk_url'] != '' %}
+{{ 'pubjwk_url = \"' + o['pubjwk_url'] + '\"' }}
+{% endif %}
+{% if o['ready_path'] is defined and o['ready_path'] != '' %}
+{{ 'ready_path = \"' + o['ready_path'] + '\"' }}
+{% endif %}
+{% if o['real_client_ip_header'] is defined and
+  o['real_client_ip_header'] in ['X-Forwarded-For', 'X-Real-IP',
+  'X-ProxyUser-IP'] %}
+{{ 'real_client_ip_header = \"' + o['real_client_ip_header'] + '\"' }}
+{% endif %}
+{% if o['redeem_url'] is defined and o['redeem_url'] != '' %}
+{{ 'redeem_url = \"' + o['redeem_url'] + '\"' }}
+{% endif %}
+{% if o['redirect_url'] is defined and o['redirect_url'] != '' %}
+{{ 'redirect_url = \"' + o['redirect_url'] + '\"' }}
+{% endif %}
+{% if o['redis_ca_path'] is defined and o['redis_ca_path'] != '' %}
+{{ 'redis_ca_path = \"' + o['redis_ca_path'] + '\"' }}
+{% endif %}
+{% if o['redis_cluster_connection_urls'] is defined and
+  o['redis_cluster_connection_urls'] != '' %}
+{{ 'redis_cluster_connection_urls = \"' +
+  o['redis_cluster_connection_urls'] + '\"' }}
+{% endif %}
+{% if o['redis_connection_idle_timeout'] is defined and
+  o['redis_connection_idle_timeout'] != '' %}
+{{ 'redis_connection_idle_timeout = \"' +
+  o['redis_connection_idle_timeout'] + '\"' }}
+{% endif %}
+{% if o['redis_insecure_skip_tls_verify'] is defined and
+  o['redis_insecure_skip_tls_verify'] in ['true', 'false'] %}
+{{ 'redis_insecure_skip_tls_verify = ' + o['redis_insecure_skip_tls_verify'] }}
+{% endif %}
+{% if o['redis_password'] is defined and o['redis_password'] != '' %}
+{{ 'redis_password = \"' + o['redis_password'] + '\"' }}
+{% endif %}
+{% if o['redis_sentinel_connection_urls'] is defined and
+  o['redis_sentinel_connection_urls'] != '' %}
+{{ 'redis_sentinel_connection_urls = \"' +
+  o['redis_sentinel_connection_urls'] + '\"' }}
+{% endif %}
+{% if o['redis_sentinel_master_name'] is defined and
+  o['redis_sentinel_master_name'] != '' %}
+{{ 'redis_sentinel_master_name = \"' +
+  o['redis_sentinel_master_name'] + '\"' }}
+{% endif %}
+{% if o['redis_sentinel_password'] is defined and
+  o['redis_sentinel_password'] != '' %}
+{{ 'redis_sentinel_password = \"' +
+  o['redis_sentinel_password'] + '\"' }}
+{% endif %}
+{% if o['redis_use_cluster'] is defined and
+  o['redis_use_cluster'] in ['true', 'false'] %}
+{{ 'redis_use_cluster = ' + o['redis_use_cluster'] }}
+{% endif %}
+{% if o['redis_use_sentinel'] is defined and
+  o['redis_use_sentinel'] in ['true', 'false'] %}
+{{ 'redis_use_sentinel = ' + o['redis_use_sentinel'] }}
+{% endif %}
+{% if o['redis_username'] is defined and o['redis_username'] != '' %}
+{{ 'redis_username = \"' + o['redis_username'] + '\"' }}
+{% endif %}
+{% if o['relative_redirect_url'] is defined and
+  o['relative_redirect_url'] in ['true', 'false'] %}
+{{ 'relative_redirect_url = ' + o['relative_redirect_url'] }}
+{% endif %}
+{% if o['request_id_header'] is defined and o['request_id_header'] != '' %}
+{{ 'request_id_header = \"' + o['request_id_header'] + '\"' }}
+{% endif %}
+{% if o['request_logging'] is defined and
+  o['request_logging'] in ['true', 'false'] %}
+{{ 'request_logging = ' + o['request_logging'] }}
+{% endif %}
+{% if o['request_logging_format'] is defined and
+  o['request_logging_format'] != '' %}
+{{ 'request_logging_format = \"' + o['request_logging_format'] + '\"' }}
+{% endif %}
+{% if o['resource'] is defined and o['resource'] != '' %}
+{{ 'resource = \"' + o['resource'] + '\"' }}
+{% endif %}
+{% if o['reverse_proxy'] is defined and
+  o['reverse_proxy'] in ['true', 'false'] %}
+{{ 'reverse_proxy = ' + o['reverse_proxy'] }}
+{% endif %}
+{% if o['scope'] is defined and o['scope'] %}
+{{ 'scope = \"' + o['scope'] + '\"' }}
+{% endif %}
+{% if o['session_cookie_minimal'] is defined and
+  o['session_cookie_minimal'] in ['true', 'false'] %}
+{{ 'session_cookie_minimal = ' + o['session_cookie_minimal'] }}
+{% endif %}
+{% if o['session_store_type'] is defined and o['session_store_type'] %}
+{{ 'session_store_type = \"' + o['session_store_type'] + '\"' }}
+{% endif %}
+{% if o['set_authorization_header'] is defined and
+  o['set_authorization_header'] in ['true', 'false'] %}
+{{ 'set_authorization_header = ' + o['set_authorization_header'] }}
+{% endif %}
+{% if o['set_basic_auth'] is defined and
+  o['set_basic_auth'] in ['true', 'false'] %}
+{{ 'set_basic_auth = ' + o['set_basic_auth'] }}
+{% endif %}
+{% if o['set_xauthrequest'] is defined and
+  o['set_xauthrequest'] in ['true', 'false'] %}
+{{ 'set_xauthrequest = ' + o['set_xauthrequest'] }}
+{% endif %}
+{% if o['show_debug_on_error'] is defined and
+  o['show_debug_on_error'] in ['true', 'false'] %}
+{{ 'show_debug_on_error = ' + o['show_debug_on_error'] }}
+{% endif %}
+{% if o['signature_key'] is defined and o['signature_key'] %}
+{{ 'signature_key = \"' + o['signature_key'] + '\"' }}
+{% endif %}
+{% if o['silence_ping_logging'] is defined and
+  o['silence_ping_logging'] in ['true', 'false'] %}
+{{ 'silence_ping_logging = ' + o['silence_ping_logging'] }}
+{% endif %}
+{% if o['skip_auth_preflight'] is defined and
+  o['skip_auth_preflight'] in ['true', 'false'] %}
+{{ 'skip_auth_preflight = ' + o['skip_auth_preflight'] }}
+{% endif %}
+{% if o['skip_auth_route'] is defined and o['skip_auth_route'] %}
+{{ 'skip_auth_route = \"' + o['skip_auth_route'] + '\"' }}
+{% endif %}
+{% if o['skip_auth_strip_headers'] is defined and
+  o['skip_auth_strip_headers'] in ['true', 'false'] %}
+{{ 'skip_auth_strip_headers = ' + o['skip_auth_strip_headers'] }}
+{% endif %}
+{% if o['skip_claims_from_profile_url'] is defined and
+  o['skip_claims_from_profile_url'] in ['true', 'false'] %}
+{{ 'skip_claims_from_profile_url = ' + o['skip_claims_from_profile_url'] }}
+{% endif %}
+{% if o['skip_jwt_bearer_tokens'] is defined and
+  o['skip_jwt_bearer_tokens'] in ['true', 'false'] %}
+{{ 'skip_jwt_bearer_tokens = ' + o['skip_jwt_bearer_tokens'] }}
+{% endif %}
+{% if o['skip_oidc_discovery'] is defined and
+  o['skip_oidc_discovery'] in ['true', 'false'] %}
+{{ 'skip_oidc_discovery = ' + o['skip_oidc_discovery'] }}
+{% endif %}
+{% if o['skip_provider_button'] is defined and
+  o['skip_provider_button'] in ['true', 'false'] %}
+{{ 'skip_provider_button = ' + o['skip_provider_button'] }}
+{% endif %}
+{% if o['ssl_insecure_skip_verify'] is defined and
+  o['ssl_insecure_skip_verify'] in ['true', 'false'] %}
+{{ 'ssl_insecure_skip_verify = ' + o['ssl_insecure_skip_verify'] }}
+{% endif %}
+{% if o['ssl_upstream_insecure_skip_verify'] is defined and
+  o['ssl_upstream_insecure_skip_verify'] in ['true', 'false'] %}
+{{ 'ssl_upstream_insecure_skip_verify = ' +
+  o['ssl_upstream_insecure_skip_verify'] }}
+{% endif %}
+{% if o['standard_logging'] is defined and
+  o['standard_logging'] in ['true', 'false'] %}
+{{ 'standard_logging = ' + o['standard_logging'] }}
+{% endif %}
+{% if o['standard_logging_format'] is defined and
+  o['standard_logging_format'] != '' %}
+{{ 'standard_logging_format = \"' + o['standard_logging_format'] + '\"' }}
+{% endif %}
+{% if o['tls_cert_file'] is defined and o['tls_cert_file'] != '' %}
+{{ 'tls_cert_file = \"' + o['tls_cert_file'] + '\"' }}
+{% endif %}
+{% if o['tls_cipher_suite'] is defined and o['tls_cipher_suite'] != '' %}
+{{ 'tls_cipher_suite = \"' + o['tls_cipher_suite'] + '\"' }}
+{% endif %}
+{% if o['tls_key_file'] is defined and o['tls_key_file'] != '' %}
+{{ 'tls_key_file = \"' + o['tls_key_file'] + '\"' }}
+{% endif %}
+{% if o['tls_min_version'] is defined and o['tls_min_version'] != '' %}
+{{ 'tls_min_version = \"' + o['tls_min_version'] + '\"' }}
+{% endif %}
+{% if o['trusted_ip'] is defined and o['trusted_ip'] != '' %}
+{{ 'trusted_ip = \"' + o['trusted_ip'] + '\"' }}
+{% endif %}
+{% if o['upstream'] is defined and o['upstream'] != '' %}
+{{ 'upstream = \"' + o['upstream'] + '\"' }}
+{% endif %}
+{% if o['upstream_timeout'] is defined and o['upstream_timeout'] != '' %}
+{{ 'upstream_timeout = \"' + o['upstream_timeout'] + '\"' }}
+{% endif %}
+{% if o['use_system_trust_store'] is defined and
+  o['use_system_trust_store'] in ['true', 'false'] %}
+{{ 'use_system_trust_store = ' + o['use_system_trust_store'] }}
+{% endif %}
+{% if o['validate_url'] is defined and o['validate_url'] != '' %}
+{{ 'validate_url = \"' + o['validate_url'] + '\"' }}
+{% endif %}
+{% if o['version'] is defined and o['version'] != '' %}
+{{ 'version = \"' + o['version'] + '\"' }}
+{% endif %}
+{% if o['whitelist_domain'] is defined and o['whitelist_domain'] != '' %}
+{% if o['whitelist_domain'] is string %}
+{{ 'whitelist_domain = \"' + o['whitelist_domain'] + '\"' }}
+{% elif o['whitelist_domain'] is sequence %}
+{% for owd in o['whitelist_domain'] %}
+{% if loop['first'] %}
+{{ 'whitelist_domain = [' -}}
+{% endif %}
+{{- '\"' ~ owd ~ '\"' -}}
+{% if loop['last'] %}
+{{- ']' }}
+{% else %}
+{{- ',' -}}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}

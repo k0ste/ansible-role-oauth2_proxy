@@ -1,0 +1,28 @@
+---
+- name: "oauth2_proxy | Deploy oauth2_proxy configuration"
+  ansible.builtin.template:
+    src: "oauth2-proxy.j2"
+    dest: "{{ hostvars[inventory_hostname]['oauth2_proxy_dest'] +
+      '/oauth2-proxy.' +
+      (hostvars[inventory_hostname]['oauth2_proxy_conf'] | default('conf'))  }}"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  when:
+    - "vars['oauth2p_settings'] is defined"
+    - "vars['oauth2p_settings'] != []"
+  notify:
+    - "Restart oauth2-proxy"
+- name: "oauth2_proxy | Enable oauth2_proxy service"
+  ansible.builtin.systemd:
+    name: "{{ hostvars[inventory_hostname]['oauth2_proxy_service'] }}"
+    enabled: "yes"
+  when:
+    - "hostvars[inventory_hostname]['oauth2_proxy'] is defined"
+    - "hostvars[inventory_hostname]['oauth2_proxy'] != ''"
+    - "hostvars[inventory_hostname]['oauth2_proxy'] |
+       community.general.json_query(vars['oauth2p_enable']) is defined"
+    - "hostvars[inventory_hostname]['oauth2_proxy'] |
+       community.general.json_query(vars['oauth2p_enable']) == 'true'"
+  vars:
+    oauth2p_enable: "[] | map(&enable || 'false', @) | [0]"

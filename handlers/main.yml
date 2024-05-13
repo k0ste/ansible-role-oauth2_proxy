@@ -1,0 +1,17 @@
+---
+- name: "Daemon reload"
+  ansible.builtin.systemd:
+    daemon_reload: "yes"
+- name: "Restart oauth2-proxy"
+  ansible.builtin.systemd:
+    name: "{{ hostvars[inventory_hostname]['oauth2_proxy_service'] }}"
+    state: "restarted"
+  when:
+    - "hostvars[inventory_hostname]['oauth2_proxy'] is defined"
+    - "hostvars[inventory_hostname]['oauth2_proxy'] != ''"
+    - "hostvars[inventory_hostname]['oauth2_proxy'] |
+       community.general.json_query(vars['oauth2p_restart']) is defined"
+    - "hostvars[inventory_hostname]['oauth2_proxy'] |
+       community.general.json_query(vars['oauth2p_restart']) == 'true'"
+  vars:
+    oauth2p_restart: "[] | map(&restart || 'false', @) | [0]"

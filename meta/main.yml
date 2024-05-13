@@ -1,0 +1,18 @@
+---
+galaxy_info:
+  role_name: "oauth2_proxy"
+  namespace: "none"
+  author: "Konstantin Shalygin <k0ste@k0ste.ru>"
+  issue_tracker_url: "https://github.com/k0ste/ansible-role-oauth2_proxy"
+  description: "Role for deploy oauth2-proxy - reverse proxy for authentication
+    using Providers"
+  company: "YASB"
+  license: "GPL"
+  min_ansible_version: "3.0.0"
+  platforms:
+    - name: "EL"
+      versions:
+        - 'all'
+  galaxy_tags:
+    - 'networking'
+dependencies: []
