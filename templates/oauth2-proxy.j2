@@ -14,11 +14,11 @@
 {% endif %}
 {% if o['allowed_group'] is defined and o['allowed_group'] != '' %}
 {% if o['allowed_group'] is string %}
-{{ 'allowed_group = \"' + o['allowed_group'] + '\"' }}
+{{ 'allowed_groups = \"' + o['allowed_group'] + '\"' }}
 {% elif o['allowed_group'] is sequence %}
 {% for oag in o['allowed_group'] %}
 {% if loop['first'] %}
-{{ 'allowed_group = [' -}}
+{{ 'allowed_groups = [' -}}
 {% endif %}
 {{- '\"' ~ oag ~ '\"' -}}
 {% if loop['last'] %}
@@ -31,11 +31,11 @@
 {% endif %}
 {% if o['allowed_role'] is defined and o['allowed_role'] != '' %}
 {% if o['allowed_role'] is string %}
-{{ 'allowed_role = \"' + o['allowed_role'] + '\"' }}
+{{ 'allowed_roles = \"' + o['allowed_role'] + '\"' }}
 {% elif o['allowed_role'] is sequence %}
 {% for oar in o['allowed_role'] %}
 {% if loop['first'] %}
-{{ 'allowed_role = [' -}}
+{{ 'allowed_roles = [' -}}
 {% endif %}
 {{- '\"' ~ oar ~ '\"' -}}
 {% if loop['last'] %}
@@ -47,7 +47,21 @@
 {% endif %}
 {% endif %}
 {% if o['api_route'] is defined and o['api_route'] != '' %}
-{{ 'api_route = \"' + o['api_route'] + '\"' }}
+{% if o['api_route'] is string %}
+{{ 'api_routes = \"' + o['allowed_role'] + '\"' }}
+{% elif o['api_route'] is sequence %}
+{% for oar in o['api_route'] %}
+{% if loop['first'] %}
+{{ 'api_routes = [' -}}
+{% endif %}
+{{- '\"' ~ oar ~ '\"' -}}
+{% if loop['last'] %}
+{{- ']' }}
+{% else %}
+{{- ',' -}}
+{% endif %}
+{% endfor %}
+{% endif %}
 {% endif %}
 {% if o['approval_prompt'] is defined and o['approval_prompt'] != '' %}
 {{ 'approval_prompt = \"' + o['approval_prompt'] + '\"' }}
@@ -89,6 +103,9 @@
 {% if o['client_id'] is defined and o['client_id'] != '' %}
 {{ 'client_id = \"' + o['client_id'] + '\"' }}
 {% endif %}
+{% if o['client_secret'] is defined and o['client_secret'] != '' %}
+{{ 'client_secret = \"' + o['client_secret'] + '\"' }}
+{% endif %}
 {% if o['client_secret_file'] is defined and o['client_secret_file'] != '' %}
 {{ 'client_secret_file = \"' + o['client_secret_file'] + '\"' }}
 {% endif %}
@@ -104,7 +121,21 @@
 {{ 'cookie_csrf_per_request = ' + o['cookie_csrf_per_request'] }}
 {% endif %}
 {% if o['cookie_domain'] is defined and o['cookie_domain'] != '' %}
-{{ 'cookie_domain = \"' + o['cookie_domain'] + '\"' }}
+{% if o['cookie_domain'] is string %}
+{{ 'cookie_domains = \"' + o['cookie_domain'] + '\"' }}
+{% elif o['cookie_domain'] is sequence %}
+{% for ocd in o['cookie_domain'] %}
+{% if loop['first'] %}
+{{ 'cookie_domains = [' -}}
+{% endif %}
+{{- '\"' ~ ocd ~ '\"' -}}
+{% if loop['last'] %}
+{{- ']' }}
+{% else %}
+{{- ',' -}}
+{% endif %}
+{% endfor %}
+{% endif %}
 {% endif %}
 {% if o['cookie_expire'] is defined and o['cookie_expire'] != '' %}
 {{ 'cookie_expire = \"' + o['cookie_expire'] + '\"' }}
@@ -144,7 +175,21 @@
 {{ 'ddisplay_htpasswd_form = ' + o['ddisplay_htpasswd_form'] }}
 {% endif %}
 {% if o['email_domain'] is defined and o['email_domain'] != '' %}
-{{ 'email_domain = \"' + o['email_domain'] + '\"' }}
+{% if o['email_domain'] is string %}
+{{ 'email_domains = \"' + o['email_domain'] + '\"' }}
+{% elif o['email_domain'] is sequence %}
+{% for oem in o['email_domain'] %}
+{% if loop['first'] %}
+{{ 'email_domains = [' -}}
+{% endif %}
+{{- '\"' ~ oem ~ '\"' -}}
+{% if loop['last'] %}
+{{- ']' }}
+{% else %}
+{{- ',' -}}
+{% endif %}
+{% endfor %}
+{% endif %}
 {% endif %}
 {% if o['encode_state'] is defined and o['encode_state'] in ['true', 'false'] %}
 {{ 'encode_state = ' + o['encode_state'] }}
@@ -194,15 +239,29 @@
 {{ 'github_token = \"' + o['github_token'] + '\"' }}
 {% endif %}
 {% if o['github_user'] is defined and o['github_user'] != '' %}
-{{ 'github_user = \"' + o['github_user'] + '\"' }}
+{% if o['github_user'] is string %}
+{{ 'github_users = \"' + o['github_user'] + '\"' }}
+{% elif o['github_user'] is sequence %}
+{% for ogu in o['github_user'] %}
+{% if loop['first'] %}
+{{ 'github_users = [' -}}
+{% endif %}
+{{- '\"' ~ ogu ~ '\"' -}}
+{% if loop['last'] %}
+{{- ']' }}
+{% else %}
+{{- ',' -}}
+{% endif %}
+{% endfor %}
+{% endif %}
 {% endif %}
 {% if o['gitlab_group'] is defined and o['gitlab_group'] != '' %}
 {% if o['gitlab_group'] is string %}
-{{ 'gitlab_group = \"' + o['gitlab_group'] + '\"' }}
+{{ 'gitlab_groups = \"' + o['gitlab_group'] + '\"' }}
 {% elif o['gitlab_group'] is sequence %}
 {% for ogg in o['gitlab_group'] %}
 {% if loop['first'] %}
-{{ 'gitlab_group = [' -}}
+{{ 'gitlab_groups = [' -}}
 {% endif %}
 {{- '\"' ~ ogg ~ '\"' -}}
 {% if loop['last'] %}
@@ -215,11 +274,11 @@
 {% endif %}
 {% if o['gitlab_project'] is defined and o['gitlab_project'] != '' %}
 {% if o['gitlab_project'] is string %}
-{{ 'gitlab_project = \"' + o['gitlab_project'] + '\"' }}
+{{ 'gitlab_projects = \"' + o['gitlab_project'] + '\"' }}
 {% elif o['gitlab_project'] is sequence %}
 {% for ogp in o['gitlab_project'] %}
 {% if loop['first'] %}
-{{ 'gitlab_project = [' -}}
+{{ 'gitlab_projects = [' -}}
 {% endif %}
 {{- '\"' ~ ogp ~ '\"' -}}
 {% if loop['last'] %}
@@ -235,11 +294,11 @@
 {% endif %}
 {% if o['google_group'] is defined and o['google_group'] != '' %}
 {% if o['google_group'] is string %}
-{{ 'google_group = \"' + o['google_group'] + '\"' }}
+{{ 'google_groups = \"' + o['google_group'] + '\"' }}
 {% elif o['google_group'] is sequence %}
 {% for ogp in o['google_group'] %}
 {% if loop['first'] %}
-{{ 'google_group = [' -}}
+{{ 'google_groups = [' -}}
 {% endif %}
 {{- '\"' ~ ogp ~ '\"' -}}
 {% if loop['last'] %}
@@ -270,11 +329,11 @@
 {% endif %}
 {% if o['htpasswd_user_group'] is defined and o['htpasswd_user_group'] != '' %}
 {% if o['htpasswd_user_group'] is string %}
-{{ 'htpasswd_user_group = \"' + o['htpasswd_user_group'] + '\"' }}
+{{ 'htpasswd_user_groups = \"' + o['htpasswd_user_group'] + '\"' }}
 {% elif o['htpasswd_user_group'] is sequence %}
 {% for ohug in o['htpasswd_user_group'] %}
 {% if loop['first'] %}
-{{ 'htpasswd_user_group = [' -}}
+{{ 'htpasswd_user_groups = [' -}}
 {% endif %}
 {{- '\"' ~ ohug ~ '\"' -}}
 {% if loop['last'] %}
@@ -309,11 +368,11 @@
 {% endif %}
 {% if o['keycloak_group'] is defined and o['keycloak_group'] != '' %}
 {% if o['keycloak_group'] is string %}
-{{ 'keycloak_group = \"' + o['keycloak_group'] + '\"' }}
+{{ 'keycloak_groups = \"' + o['keycloak_group'] + '\"' }}
 {% elif o['keycloak_group'] is sequence %}
 {% for okg in o['keycloak_group'] %}
 {% if loop['first'] %}
-{{ 'keycloak_group = [' -}}
+{{ 'keycloak_groups = [' -}}
 {% endif %}
 {{- '\"' ~ okg ~ '\"' -}}
 {% if loop['last'] %}
@@ -373,6 +432,23 @@
 {% endif %}
 {% if o['oidc_extra_audience'] is defined and o['oidc_extra_audience'] != '' %}
 {{ 'oidc_extra_audience = \"' + o['oidc_extra_audience'] + '\"' }}
+{% endif %}
+{% if o['oidc_extra_audience'] is defined and o['oidc_extra_audience'] != '' %}
+{% if o['oidc_extra_audience'] is string %}
+{{ 'oidc_extra_audiences = \"' + o['oidc_extra_audience'] + '\"' }}
+{% elif o['oidc_extra_audience'] is sequence %}
+{% for ooea in o['oidc_extra_audience'] %}
+{% if loop['first'] %}
+{{ 'oidc_extra_audiences = [' -}}
+{% endif %}
+{{- '\"' ~ ooea ~ '\"' -}}
+{% if loop['last'] %}
+{{- ']' }}
+{% else %}
+{{- ',' -}}
+{% endif %}
+{% endfor %}
+{% endif %}
 {% endif %}
 {% if o['oidc_groups_claim'] is defined and o['oidc_groups_claim'] != '' %}
 {{ 'oidc_groups_claim = \"' + o['oidc_groups_claim'] + '\"' }}
@@ -558,8 +634,22 @@
   o['skip_auth_preflight'] in ['true', 'false'] %}
 {{ 'skip_auth_preflight = ' + o['skip_auth_preflight'] }}
 {% endif %}
-{% if o['skip_auth_route'] is defined and o['skip_auth_route'] %}
-{{ 'skip_auth_route = \"' + o['skip_auth_route'] + '\"' }}
+{% if o['skip_auth_route'] is defined and o['skip_auth_route'] != '' %}
+{% if o['skip_auth_route'] is string %}
+{{ 'skip_auth_routes = \"' + o['skip_auth_route'] + '\"' }}
+{% elif o['skip_auth_route'] is sequence %}
+{% for osar in o['skip_auth_route'] %}
+{% if loop['first'] %}
+{{ 'skip_auth_routes = [' -}}
+{% endif %}
+{{- '\"' ~ osar ~ '\"' -}}
+{% if loop['last'] %}
+{{- ']' }}
+{% else %}
+{{- ',' -}}
+{% endif %}
+{% endfor %}
+{% endif %}
 {% endif %}
 {% if o['skip_auth_strip_headers'] is defined and
   o['skip_auth_strip_headers'] in ['true', 'false'] %}
@@ -611,10 +701,38 @@
 {{ 'tls_min_version = \"' + o['tls_min_version'] + '\"' }}
 {% endif %}
 {% if o['trusted_ip'] is defined and o['trusted_ip'] != '' %}
-{{ 'trusted_ip = \"' + o['trusted_ip'] + '\"' }}
+{% if o['trusted_ip'] is string %}
+{{ 'trusted_ips = \"' + o['trusted_ip'] + '\"' }}
+{% elif o['trusted_ip'] is sequence %}
+{% for oti in o['trusted_ip'] %}
+{% if loop['first'] %}
+{{ 'trusted_ips = [' -}}
+{% endif %}
+{{- '\"' ~ oti ~ '\"' -}}
+{% if loop['last'] %}
+{{- ']' }}
+{% else %}
+{{- ',' -}}
+{% endif %}
+{% endfor %}
+{% endif %}
 {% endif %}
 {% if o['upstream'] is defined and o['upstream'] != '' %}
-{{ 'upstream = \"' + o['upstream'] + '\"' }}
+{% if o['upstream'] is string %}
+{{ 'upstreams = \"' + o['upstream'] + '\"' }}
+{% elif o['upstream'] is sequence %}
+{% for ou in o['upstream'] %}
+{% if loop['first'] %}
+{{ 'upstreams = [' -}}
+{% endif %}
+{{- '\"' ~ ou ~ '\"' -}}
+{% if loop['last'] %}
+{{- ']' }}
+{% else %}
+{{- ',' -}}
+{% endif %}
+{% endfor %}
+{% endif %}
 {% endif %}
 {% if o['upstream_timeout'] is defined and o['upstream_timeout'] != '' %}
 {{ 'upstream_timeout = \"' + o['upstream_timeout'] + '\"' }}
@@ -631,11 +749,11 @@
 {% endif %}
 {% if o['whitelist_domain'] is defined and o['whitelist_domain'] != '' %}
 {% if o['whitelist_domain'] is string %}
-{{ 'whitelist_domain = \"' + o['whitelist_domain'] + '\"' }}
+{{ 'whitelist_domains = \"' + o['whitelist_domain'] + '\"' }}
 {% elif o['whitelist_domain'] is sequence %}
 {% for owd in o['whitelist_domain'] %}
 {% if loop['first'] %}
-{{ 'whitelist_domain = [' -}}
+{{ 'whitelist_domains = [' -}}
 {% endif %}
 {{- '\"' ~ owd ~ '\"' -}}
 {% if loop['last'] %}

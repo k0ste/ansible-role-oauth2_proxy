@@ -336,7 +336,7 @@ oauth2_proxy:
 # sensitive information - do not use in production)
       show_debug_on_error: 'false'
 # GAP-Signature request signature key
-      signature_key:  ''
+      signature_key: ''
 # Disable logging of requests to ping & ready endpoints
       silence_ping_logging: 'true'
 # Will skip authentication for OPTIONS requests
