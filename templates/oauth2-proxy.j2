@@ -3,7 +3,8 @@
 {{ '# Do not edit manually' }}
 
 {% if vars['oauth2p_settings'] is defined and
-  vars['oauth2p_settings'] != [] %}
+  (vars['oauth2p_settings'] != [] or vars['oauth2p_settings'] != '' or
+  vars['oauth2p_settings'] != None) %}
 {% for o in vars['oauth2p_settings'] %}
 {% if o['acr_values_string'] is defined and o['acr_values_string'] != '' %}
 {{ 'acr_values_string = \"' + o['acr_values_string'] + '\"' }}

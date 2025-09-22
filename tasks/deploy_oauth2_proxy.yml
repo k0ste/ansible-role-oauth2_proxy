@@ -11,6 +11,8 @@
   when:
     - "vars['oauth2p_settings'] is defined"
     - "vars['oauth2p_settings'] != []"
+    - "vars['oauth2p_settings'] != ''"
+    - "vars['oauth2p_settings'] != None"
   notify:
     - "Restart oauth2-proxy"
 - name: "oauth2_proxy | Enable oauth2_proxy service"

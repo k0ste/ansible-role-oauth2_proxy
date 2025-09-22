@@ -22,15 +22,17 @@
     quiet: "true"
   when:
     - "vars['oauth2p_package_state'] is defined"
-    - "vars['oauth2p_package_state'] != ''"
     - "vars['oauth2p_package_state'] != []"
+    - "vars['oauth2p_package_state'] != ''"
+    - "vars['oauth2p_package_state'] != None"
 - name: "oauth2_proxy | Set oauth2_proxy package state to present state from
     empty state"
   ansible.builtin.set_fact:
     oauth2p_package_state: 'present'
   when:
     - "vars['oauth2p_package_state'] is defined"
-    - "vars['oauth2p_package_state'] == ''"
+    - "(vars['oauth2p_package_state'] == '' or
+      vars['oauth2p_package_state'] == None)"
 - name: "oauth2_proxy | Create catalogs"
   ansible.builtin.file:
     path: "{{ hostvars[inventory_hostname]['oauth2_proxy_dest'] }}"
@@ -40,5 +42,6 @@
     mode: "0755"
   when:
     - "vars['oauth2p_settings'] is defined"
-    - "vars['oauth2p_settings'] != ''"
     - "vars['oauth2p_settings'] != []"
+    - "vars['oauth2p_settings'] != ''"
+    - "vars['oauth2p_settings'] != None"
