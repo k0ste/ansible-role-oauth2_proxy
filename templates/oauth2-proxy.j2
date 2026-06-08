@@ -784,6 +784,24 @@
 {% endfor %}
 {% endif %}
 {% endif %}
+{% if o['trusted_proxy_ip'] is defined and o['trusted_proxy_ip']
+ not in ['', [], '[]', None] %}
+{% if o['trusted_proxy_ip'] is string %}
+{{ 'trusted_proxy_ips = \"' + o['trusted_proxy_ip'] + '\"' }}
+{% elif o['trusted_proxy_ip'] is sequence %}
+{% for otpi in o['trusted_proxy_ip'] %}
+{% if loop['first'] %}
+{{ 'trusted_proxy_ips = [' -}}
+{% endif %}
+{{- '\"' ~ otpi ~ '\"' -}}
+{% if loop['last'] %}
+{{- ']' }}
+{% else %}
+{{- ',' -}}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endif %}
 {% if o['upstream'] is defined and o['upstream'] not in ['', [], '[]', None] %}
 {% if o['upstream'] is string %}
 {{ 'upstreams = \"' + o['upstream'] + '\"' }}
